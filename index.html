@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #fde2e4, #fadadd);
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        background: rgba(255,255,255,0.9);
+        padding: 40px;
+        border-radius: 28px;
+        max-width: 600px;
+        width: 85%;
+        text-align: center;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        z-index: 2;
+        animation: fadeIn 1.2s ease;
+    }
+
+    h1 {
+        color: #e91e63;
+        margin-bottom: 18px;
+        font-size: 28px;
+    }
+
+    p {
+        font-size: 17px;
+        color: #444;
+        line-height: 1.6;
+        margin-bottom: 14px;
+    }
+
+    .highlight {
+        color: #e91e63;
+        font-weight: 600;
+    }
+
+    button {
+        padding: 12px 28px;
+        font-size: 16px;
+        border-radius: 25px;
+        border: none;
+        cursor: pointer;
+        margin: 10px;
+        transition: transform 0.2s;
+    }
+
+    button:active {
+        transform: scale(0.95);
+    }
+
+    .yes {
+        background: #e91e63;
+        color: white;
+    }
+
+    .no {
+        background: #ccc;
+        color: #333;
+    }
+
+    .photo {
+        width: 200px;
+        height: auto;
+        border-radius: 20px;
+        margin: 20px auto;
+        display: block;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .doodle {
+        position: absolute;
+        font-size: 24px;
+        opacity: 0.6;
+        pointer-events: none;
+        animation: floatUp 10s linear infinite;
+    }
+
+    @keyframes floatUp {
+        from { transform: translateY(110vh) rotate(0deg); }
+        to { transform: translateY(-20vh) rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="content">
+    <h1>Hey Kanishka 💖</h1>
+    <p>Aage badhne se pehle ek chhota sa question hai 🤍</p>
+    <p class="highlight">Are you ready to smile thoda sa?</p>
+    <button class="yes" onclick="nextStep(1)">Yes 😊</button>
+    <button class="no" onclick="alert('Thoda sa smile toh banta hai na 😌')">No</button>
+</div>
+
+<script>
+const content = document.getElementById("content");
+
+// Global Audio Setup
+const music = new Audio('music.mp3');
+music.loop = true;
+let musicStarted = false;
+
+function startMusic() {
+    if (!musicStarted) {
+        music.play().catch(e => console.log("Audio play failed:", e));
+        musicStarted = true;
+    }
+}
+
+function nextStep(n) {
+    // Start music on the very first interaction
+    startMusic();
+
+    if (n === 1) {
+        content.innerHTML = `
+            <h1>Good 😌</h1>
+            <p>Ek aur baat thoda sa patience hai tumhare paas?</p>
+            <p class="highlight">Kyunki yeh sirf shuruaat hai.</p>
+            <button class="yes" onclick="nextStep(2)">Yes 💗</button>
+            <button class="no" onclick="alert('Bas thoda sa aur 🤍')">No</button>
+        `;
+    }
+
+    if (n === 2) {
+        content.innerHTML = `
+            <h1>Okay 🤍</h1>
+            <p>Last one promise.</p>
+            <p class="highlight">Will you let me make this Valentine’s week special for us?</p>
+            <button class="yes" onclick="nextStep(3)">Yes ❤️</button>
+            <button class="no" onclick="alert('Iska answer toh haan hi hoga 😌')">No</button>
+        `;
+    }
+
+    if (n === 3) {
+        content.innerHTML = `
+            <div style="max-height: 80vh; overflow-y: auto; padding-right: 10px;">
+                <h1>Hey Kanishka 💖</h1>
+                <img src="starter.jpg" class="photo" alt="Our Special Moment">
+
+                <p>Yeh sirf ek chhoti si shuruaat hai. Main bas tumhe yeh batana chahta tha ki aane wale din thode special hone wale hain.</p>
+                <p>Hum dono ka pehla Valentine’s week hai aur honestly mujhe bas yeh chahiye ki tum har din thoda sa aur khush raho.</p>
+                <p>Shayad hum physical gifts exchange na kar paaye taki family ko pata na chale aur woh bilkul theek hai.</p>
+                <p>Par hum apna favourite food saath mein kha sakte hain, we can hold our hands together, tight hugs le sakte hain, aur bas ek dusre ke saath reh sakte hain.</p>
+                <p>Mujhe kisi grand cheez ki zarurat nahi. Bas tumhara saath, tumhari smile, aur yeh feeling ki yeh pal sirf humare hain.</p>
+                <p>Is poore week mein main bas itna chahta hoon ki hum ise slow rakhein, soft rakhein aur apna banayein. 🤍</p>
+            </div>
+        `;
+    }
+}
+
+// Floating doodles logic
+const symbols = ["❤️", "🌹", "🍫", "💍", "🤗", "💋"];
+for (let i = 0; i < 25; i++) {
+    const d = document.createElement("div");
+    d.className = "doodle";
+    d.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+    d.style.left = Math.random() * 100 + "vw";
+    d.style.bottom = "-10vh";
+    d.style.animationDuration = (6 + Math.random() * 8) + "s";
+    d.style.animationDelay = (Math.random() * 5) + "s";
+    d.style.fontSize = (18 + Math.random() * 15) + "px";
+    document.body.appendChild(d);
+}
+</script>
+
+</body>
+</html>
